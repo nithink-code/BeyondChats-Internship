@@ -1,160 +1,131 @@
-# Article Rewriter Script
+# BeyondChats Article Management System
 
-This Node.js script automatically fetches articles from your API, searches Google for similar content, scrapes top-ranking articles, and uses AI to rewrite your articles to match the style of top-performing content.
+A full-stack web application for managing, scraping, and enhancing articles with a modern React frontend and Express/MongoDB backend.
 
-## Features
+## 🚀 Project Overview
 
-1. ✅ Fetches articles from your existing CRUD API
-2. ✅ Searches Google for each article's title
-3. ✅ Scrapes content from the top 2 blog/article results
-4. ✅ Uses OpenAI GPT to rewrite articles matching the style of top-ranking content
-5. ✅ Adds references to scraped articles at the bottom
-6. ✅ Updates articles using your CRUD API
+This project consists of two main components:
+1. **Backend**: An Express.js server that handles article scraping, storage (MongoDB), and AI enhancement.
+2. **Frontend**: A modern React.js application offering a responsive and professional user interface to interact with the system.
 
-## Prerequisites
+## 🏗️ Architecture & Data Flow
 
-Before running the script, you need to obtain the following API keys:
+```mermaid
+graph TD
+    User[User] -->|Interacts with| UI[React Frontend]
+    UI -->|HTTP Requests| API[Express Backend API]
+    API -->|CRUD Operations| DB[(MongoDB Database)]
+    API -->|Scrapes| Web[External Blogs/Articles]
+    API -->|Enhances User Content| AI[AI Service]
+    
+    subgraph Frontend "React + Vite"
+        UI -->|Pages| Home
+        UI -->|Pages| ArticleList
+        UI -->|Pages| ArticleDetail
+        UI -->|Pages| ArticleForm
+    end
+    
+    subgraph Backend "Node.js + Express"
+        API -->|Routes| Routes
+        Routes -->|Controllers| Controllers
+        Controllers -->|Models| Models
+    end
+```
 
-### 1. Google Custom Search API
+### Key Features
+- **Article Scraping**: Automatically fetch articles from external sources.
+- **Article Management**: Create, Read, Update, and Delete (CRUD) articles.
+- **AI Enhancement**: (Backend capability) Enhance article content using AI services.
+- **Responsive UI**: Beautiful, dark-themed interface built with modern CSS variables and glassmorphism design.
+- **Real-time Search**: Instant filtering and searching of the article library.
 
-1. Go to [Google Cloud Console](https://console.cloud.google.com/)
-2. Create a new project or select an existing one
-3. Enable the "Custom Search API"
-4. Go to "Credentials" and create an API key
-5. Copy your `GOOGLE_API_KEY`
+## 🛠️ Local Setup Instructions
 
-### 2. Google Custom Search Engine ID
+### Prerequisites
+- Node.js (v16 or higher)
+- MongoDB (Local instance or Atlas connection string)
+- Git
 
-1. Go to [Google Programmable Search Engine](https://programmablesearchengine.google.com/)
-2. Click "Add" to create a new search engine
-3. In "Sites to search", enter `www.google.com`
-4. Create the search engine
-5. Go to "Edit search engine" → "Setup" → "Basics"
-6. Copy your `Search engine ID` (this is your `GOOGLE_SEARCH_ENGINE_ID`)
+### 1. Backend Setup
 
-### 3. OpenAI API Key
+1. Navigate to the backend directory:
+   ```bash
+   cd backend
+   ```
 
-1. Go to [OpenAI Platform](https://platform.openai.com/)
-2. Sign up or log in
-3. Go to "API Keys" section
-4. Create a new API key
-5. Copy your `OPENAI_API_KEY`
-
-## Setup
-
-1. **Install dependencies** (if not already installed):
+2. Install dependencies:
    ```bash
    npm install
    ```
 
-2. **Configure environment variables**:
-   
-   Add the following to your `.env` file:
-   ```env
-   # Google Custom Search API
-   GOOGLE_API_KEY=your_google_api_key_here
-   GOOGLE_SEARCH_ENGINE_ID=your_search_engine_id_here
+3. Configure Environment Variables:
+   - Create a `.env` file in the `backend` directory based on `.env.example`.
+   - Ensure `MONGODB_URI` aligns with your database.
+   - Set `PORT` (default is 5000).
 
-   # OpenAI API
-   OPENAI_API_KEY=your_openai_api_key_here
-   ```
-
-## Usage
-
-1. **Start your API server** (in one terminal):
+4. Start the backend server:
    ```bash
    npm start
+   # or for development with nodemon
+   npm run dev
    ```
+   The API will be available at `http://localhost:5000`.
 
-2. **Run the article rewriter** (in another terminal):
+### 2. Frontend Setup
+
+1. Navigate to the frontend directory:
    ```bash
-   npm run rewrite
+   cd frontend
    ```
 
-   Or directly:
+2. Install dependencies:
    ```bash
-   node articleRewriter.js
+   npm install
    ```
 
-## How It Works
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+   The application will be accessible at `http://localhost:3000` (or the port shown in your terminal).
 
-1. **Fetch Articles**: The script fetches all articles from `http://localhost:5000/api/articles`
-
-2. **Google Search**: For each article, it searches Google using the article's title
-
-3. **Scrape Content**: It scrapes the main content from the top 2 blog/article results (excluding social media sites)
-
-4. **AI Rewriting**: Uses OpenAI GPT-3.5-turbo to rewrite the original article to match the style and formatting of the top-ranking articles
-
-5. **Add References**: Appends a references section at the bottom with links to the scraped articles
-
-6. **Update Article**: Updates the article in your database using the PUT API endpoint
-
-## Output Example
-
-After processing, your article will look like this:
+## 📁 Project Structure
 
 ```
-[Rewritten article content matching the style of top-ranking articles]
-
----
-
-**References:**
-
-1. [Article Title 1](https://example.com/article1)
-2. [Article Title 2](https://example.com/article2)
+BeyondChats/
+├── backend/                 # Express.js Server
+│   ├── controllers/         # Request handlers
+│   ├── models/              # Mongoose schemas
+│   ├── routes/              # API route definitions
+│   ├── utils/               # Helper utilities
+│   └── server.js            # Entry point
+│
+├── frontend/                # React.js Application
+│   ├── public/              # Static assets
+│   ├── src/
+│   │   ├── components/      # Reusable UI components
+│   │   ├── pages/           # Application views/routes
+│   │   ├── services/        # API integration services
+│   │   ├── App.jsx          # Main application component
+│   │   └── main.jsx         # Entry point
+│   ├── index.html           # HTML template
+│   └── vite.config.js       # Vite configuration
+│
+└── README.md                # Project documentation
 ```
 
-## Configuration
+## 🎨 Design System
 
-You can modify the following in `articleRewriter.js`:
+The frontend uses a custom CSS variable-based design system featuring:
+- **Color Palette**: HSL-based colors for easy theming (Dark mode by default).
+- **Typography**: Uses 'Inter' from Google Fonts.
+- **Effects**: Glassmorphism, smooth transitions, and micro-interactions.
+- **Responsiveness**: Mobile-first design approach.
 
-- `API_BASE_URL`: Change if your API runs on a different port
-- Content length limits in the `scrapeArticleContent` function
-- LLM model (currently using `gpt-3.5-turbo`)
-- Temperature and max_tokens for AI generation
+## 🤝 Contributing
 
-## Error Handling
-
-The script includes error handling for:
-- Missing API keys
-- Failed API requests
-- Scraping failures
-- Rate limiting (includes 2-second delays between articles)
-
-If an article fails to process, the script will log the error and continue with the next article.
-
-## Notes
-
-- The script processes articles sequentially to avoid rate limiting
-- Each article includes a 2-second delay between processing
-- Scraped content is limited to 3000 characters to avoid token limits
-- The script filters out social media links from Google search results
-- Only blog/article URLs are processed
-
-## Troubleshooting
-
-**"Missing API keys" error:**
-- Make sure all three API keys are set in your `.env` file
-
-**"Error fetching articles":**
-- Ensure your API server is running on port 5000
-- Check that you have articles in your database
-
-**"Error searching Google":**
-- Verify your Google API key is valid
-- Check that Custom Search API is enabled in Google Cloud Console
-- Ensure you haven't exceeded your daily quota
-
-**"Error calling LLM API":**
-- Verify your OpenAI API key is valid
-- Check that you have sufficient credits in your OpenAI account
-
-## API Costs
-
-- **Google Custom Search**: Free tier includes 100 searches/day
-- **OpenAI GPT-3.5-turbo**: Approximately $0.002 per article (varies based on content length)
-
-## License
-
-ISC
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
