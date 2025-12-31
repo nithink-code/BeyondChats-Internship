@@ -10,27 +10,22 @@ This project consists of two main components:
 
 ## 🏗️ Architecture & Data Flow
 
-```mermaid
-graph TD
-    User[User] -->|Interacts with| UI[React Frontend]
-    UI -->|HTTP Requests| API[Express Backend API]
-    API -->|CRUD Operations| DB[(MongoDB Database)]
-    API -->|Scrapes| Web[External Blogs/Articles]
-    API -->|Enhances User Content| AI[AI Service]
+User[User] -->|Interacts with| UI[React Frontend]
+UI -->|HTTP Requests| API[Express Backend API]
+API -->|CRUD Operations| DB[(MongoDB Database)]
+API -->|Scrapes| Web[External Blogs/Articles]
+API -->|Enhances User Content| AI[AI Service]
+
+Frontend "React + Vite"
+UI -->|Pages| Home
+UI -->|Pages| ArticleList
+UI -->|Pages| ArticleDetail
+UI -->|Pages| ArticleForm
     
-    subgraph Frontend "React + Vite"
-        UI -->|Pages| Home
-        UI -->|Pages| ArticleList
-        UI -->|Pages| ArticleDetail
-        UI -->|Pages| ArticleForm
-    end
-    
-    subgraph Backend "Node.js + Express"
-        API -->|Routes| Routes
-        Routes -->|Controllers| Controllers
-        Controllers -->|Models| Models
-    end
-```
+Backend "Node.js + Express"
+API -->|Routes| Routes
+Routes -->|Controllers| Controllers
+Controllers -->|Models| Models
 
 ### Key Features
 - **Article Scraping**: Automatically fetch articles from external sources.
@@ -122,10 +117,4 @@ The frontend uses a custom CSS variable-based design system featuring:
 - **Effects**: Glassmorphism, smooth transitions, and micro-interactions.
 - **Responsiveness**: Mobile-first design approach.
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+## Live Link: 
