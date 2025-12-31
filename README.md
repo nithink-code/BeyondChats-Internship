@@ -117,4 +117,4 @@ The frontend uses a custom CSS variable-based design system featuring:
 - **Effects**: Glassmorphism, smooth transitions, and micro-interactions.
 - **Responsiveness**: Mobile-first design approach.
 
-## Live Link: 
+## Live Link: https://beyondchats-frontend-sigma.vercel.app/
